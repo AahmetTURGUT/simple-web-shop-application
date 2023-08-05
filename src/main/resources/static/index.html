@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Product List</title>
+    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+<div class="container mt-4 table-container" id="table">
+    <h1>Product List</h1>
+    <table class="table table-bordered mt-4">
+        <thead>
+        <tr>
+            <th>Ad</th>
+            <th>Marka</th>
+            <th>Fiyat</th>
+            <th>Satın Al</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>
+
+<div class="container mt-4" id="checkoutFormContainer" style="display: none;">
+    <h2>Checkout</h2>
+    <form id="checkoutForm" onsubmit="return validateForm()">
+        <div class="form-group">
+            <label for="fullName">Ad:</label>
+            <input type="text" class="form-control" id="fullName" required>
+        </div>
+        <div class="form-group">
+            <label for="address">Adres:</label>
+            <textarea class="form-control" id="address" required></textarea>
+        </div>
+        <div class="form-group">
+            <label for="shippingOption">Kargo:</label>
+            <select class="form-control" id="shippingOption" required>
+                <option value="0">Standart(Ücretsiz)</option>
+                <option value="10">Ekspres(10 EURO)</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="creditCardNumber">Kredi Kartı Numarasi:</label>
+            <input type="text" class="form-control" id="creditCardNumber" required>
+        </div>
+        <button type="button" class="btn btn-danger" onclick="redirectToTable()">Geri</button>
+        <button type="submit" class="btn btn-primary">Ödemeyi Tamamla</button>
+    </form>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.6/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>

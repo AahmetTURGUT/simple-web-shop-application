@@ -1,0 +1,39 @@
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.btn-buy {
+    width: 100px;
+}
+
+.table-container {
+  width: 100%;
+}
+
+.table tbody tr {
+  background-color: #f8f9fa;
+}
+
+.table tbody tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.table thead th {
+  background-color: #343a40;
+  color: #fff;
+}
+
+.table td, .table th {
+  text-align: center;
+}
+
+tbody {
+    display:block;
+    max-height:85vh;
+    overflow-y:scroll;
+}
+thead, tbody tr {
+    display:table;
+    width:100%;
+    table-layout:fixed;
+}

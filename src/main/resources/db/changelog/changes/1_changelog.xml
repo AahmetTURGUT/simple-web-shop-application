@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <changeSet id="1" author="ahmet">
+        <sql>
+            <![CDATA[
+                CREATE TABLE brand (
+                    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+                    name VARCHAR(255) NOT NULL
+                );
+            ]]>
+        </sql>
+        <sql>
+            <![CDATA[
+                CREATE TABLE `order` (
+                    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+                    product_value DOUBLE NOT NULL,
+                    shipping_value DOUBLE NOT NULL,
+                    customer_name VARCHAR(255) NOT NULL,
+                    customer_address VARCHAR(255) NOT NULL
+                );
+            ]]>
+        </sql>
+        <sql>
+            <![CDATA[
+               CREATE TABLE product (
+                    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+                    brand_id BIGINT NOT NULL,
+                    name VARCHAR(255) NOT NULL,
+                    price DOUBLE NOT NULL,
+                    FOREIGN KEY (brand_id) REFERENCES brand(id)
+                );
+            ]]>
+        </sql>
+    </changeSet>
+</databaseChangeLog>
