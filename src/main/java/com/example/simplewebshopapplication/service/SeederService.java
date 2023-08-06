@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 @Component
 @RequiredArgsConstructor
@@ -27,36 +28,55 @@ public class SeederService {
     @PostConstruct
     @Transactional
     public void seedDatabase() {
-        if (seederRun) {
+        if (!seederRun) {
             createSampleBrandsAndProducts();
         }
     }
 
-
     private void createSampleBrandsAndProducts() {
-        List<BrandEntity> sampleBrands = IntStream.range(0, 10)
-                .mapToObj(i -> {
-                    BrandEntity brand = new BrandEntity();
-                    brand.setName("Brand" + i);
-                    return brand;
-                })
-                .collect(Collectors.toList());
+        List<BrandEntity> sampleBrands = createSampleBrands();
 
         List<BrandEntity> brands = brandRepository.saveAll(sampleBrands);
 
-
-        List<ProductEntity> sampleProducts = brands.stream()
-                .flatMap(brandEntity -> IntStream.range(0, 10)
-                        .mapToObj(brandIndex -> {
-                            ProductEntity product = new ProductEntity();
-                            product.setBrandId(brandEntity.getId());
-                            product.setPrice(0 + 100 * Math.random());
-                            product.setName(brandEntity.getName() + " - " + brandIndex);
-                            return product;
-                        }))
-                .collect(Collectors.toList());
+        List<ProductEntity> sampleProducts = createSampleProducts(brands);
 
         productRepository.saveAll(sampleProducts);
     }
 
+    private List<BrandEntity> createSampleBrands() {
+        return IntStream.range(0, 10)
+                .mapToObj(this::createBrand)
+                .collect(Collectors.toList());
+    }
+
+    private BrandEntity createBrand(int index) {
+        BrandEntity brand = new BrandEntity();
+        brand.setName("Brand" + index);
+        return brand;
+    }
+
+    private List<ProductEntity> createSampleProducts(List<BrandEntity> brands) {
+        return brands.stream()
+                .flatMap(brandEntity -> createProductsForBrand(brandEntity))
+                .collect(Collectors.toList());
+    }
+
+    private Stream<ProductEntity> createProductsForBrand(BrandEntity brandEntity) {
+        return IntStream.range(0, 10)
+                .mapToObj(brandIndex -> createProduct(brandEntity, brandIndex));
+    }
+
+    private ProductEntity createProduct(BrandEntity brandEntity, int index) {
+        ProductEntity product = new ProductEntity();
+        product.setBrandId(brandEntity.getId());
+        product.setPrice(generateRandomPrice());
+        product.setName(brandEntity.getName() + " - " + index);
+        return product;
+    }
+
+    private double generateRandomPrice() {
+        double minPrice = 10.0;
+        double maxPrice = 200.0;
+        return minPrice + Math.random() * (maxPrice - minPrice);
+    }
 }
